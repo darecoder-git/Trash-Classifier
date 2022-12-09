@@ -6,7 +6,7 @@ import pickle as pkl
 from sklearn.preprocessing import MinMaxScaler
 scal=MinMaxScaler()
 import pickle as pkl
-pkl.dump("model.h5",open("model.h5","wb"))
+pkl.dump(model_model.h5,open("model_model.h5","wb"))
 #Load the saved model
 model=pkl.load(open("model.h5","rb"))
 from PIL import Image
