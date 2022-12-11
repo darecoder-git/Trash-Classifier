@@ -1,48 +1,33 @@
-import streamlit as st
-import base64
-import sklearn
+
+from PIL import Image, ImageOps
 import numpy as np
-import pickle as pkl
-from sklearn.preprocessing import MinMaxScaler
-scal=MinMaxScaler()
-import pickle as pkl
-pkl.dump(model_model.h5,open("model_model.h5","wb"))
-#Load the saved model
-model=pkl.load(open("model.h5","rb"))
-from PIL import Image
-#model=load_module("model.h5")
-# Load your classification model
-
-
-# Create a function that uses the model to predict the classification
-# of an image of garbage
-def predict(image):
-    prediction = model.predict(image)
+import streamlit as st
+from tensorflow.keras.models import load_model
+#load the model
+model = load_model('model_model.h5')
+#the model is loaded
+st.write("""
+         # Trash Classification
+         """
+         )
+st.write("This is a simple image classification web app to predict trash in an image")
+#upload the image
+file = st.file_uploader("Please upload an image file", type=["jpg", "png"])
+#do predict the image
+def import_and_predict(image_data, model):
+    size = (150,150)
+    image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
+    img = np.asarray(image)
+    img_reshape = img[np.newaxis,...]
+    prediction = model.predict(img_reshape)
     return prediction
-
-# Create the main function of your Streamlit app
-def main():
-    st.title("Garbage Classification App")
-    st.markdown("Upload an image of garbage to classify it")
-
-    # Allow the user to upload an image
-    image = st.file_uploader("Choose an image", type=["jpg", "png"])
-
-    # Check if the user has uploaded an image
-    if image is not None:
-        # Convert the uploaded image to a PIL image
-        image = Image.open(image)
-
-        # Use the classification model to predict the classification
-        # of the image
-        prediction = model.predict(image)
-
-        # Display the prediction to the user
-        st.image(image)
-        st.markdown(f"This is a {prediction}")
-
-# Run the main function
-if __name__ == "__main__":
-    main()
-
+if file is None:
+    st.text("You haven't uploaded an image file")
+else:
+    image = Image.open(file)
+    st.image(image, use_column_width=True)
+    predictions = import_and_predict(image, model)
+    class_names = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
+    string = "This image most likely belongs to {} with a {:.2f} percent confidence."
+    st.write(string.format(class_names[np.argmax(predictions)], 100 * np.max(predictions)))
 
