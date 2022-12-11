@@ -1,10 +1,12 @@
-
+import tensorflow as tf
+import keras.models 
 from PIL import Image, ImageOps
 import numpy as np
 import streamlit as st
-from tensorflow.keras.models import load_model
+from keras.models import load_model
+
 #load the model
-model = load_model('model_model.h5')
+model = load_model('/content/model_model.h5')
 #the model is loaded
 st.write("""
          # Trash Classification
@@ -30,4 +32,5 @@ else:
     class_names = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
     string = "This image most likely belongs to {} with a {:.2f} percent confidence."
     st.write(string.format(class_names[np.argmax(predictions)], 100 * np.max(predictions)))
+    st.run(debug=True)
 
