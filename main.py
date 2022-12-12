@@ -1,9 +1,9 @@
 import tensorflow as tf
-import keras.models 
+from tensorflow.keras import models
 from PIL import Image, ImageOps
 import numpy as np
 import streamlit as st
-from keras.models import load_model
+from models import load_model
 
 #load the model
 model = load_model('/content/model_model.h5')
