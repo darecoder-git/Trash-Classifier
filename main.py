@@ -1,12 +1,18 @@
 import tensorflow as tf
-from tensorflow.keras import models
 from PIL import Image, ImageOps
 import numpy as np
 import streamlit as st
-from models import load_model
+from tensorflow.python.keras.models import load_model
 
+
+MODEL_PATH='./model_model.h5'
 #load the model
-model = load_model('/content/model_model.h5')
+model = load_model(MODEL_PATH)
+model.summary()
+
+
+
+'''
 #the model is loaded
 st.write("""
          # Trash Classification
@@ -15,9 +21,14 @@ st.write("""
 st.write("This is a simple image classification web app to predict trash in an image")
 #upload the image
 file = st.file_uploader("Please upload an image file", type=["jpg", "png"])
-#do predict the image
+#do predict the image'
+
+
+
+
+
 def import_and_predict(image_data, model):
-    size = (150,150)
+    size = (300,300)
     image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
     img = np.asarray(image)
     img_reshape = img[np.newaxis,...]
@@ -34,3 +45,4 @@ else:
     st.write(string.format(class_names[np.argmax(predictions)], 100 * np.max(predictions)))
     st.run(debug=True)
 
+'''
