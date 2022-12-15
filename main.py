@@ -5,7 +5,7 @@ import streamlit as st
 from tensorflow.python.keras.models import load_model
 
 
-MODEL_PATH='./model_model.h5'
+MODEL_PATH='./model_model(1).h5'
 #load the model
 model = load_model(MODEL_PATH)
 model.summary()
